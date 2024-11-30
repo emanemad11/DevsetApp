@@ -2,15 +2,16 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Laravel\Passport\Http\Controllers\AccessTokenController;
-use Laravel\Passport\Http\Controllers\AuthorizationController;
-use Laravel\Passport\Http\Controllers\ClientController;
-use Laravel\Passport\Http\Controllers\PersonalAccessTokenController;
-use Laravel\Passport\Http\Controllers\ScopeController;
-use Laravel\Passport\Http\Controllers\TransientTokenController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\QuestionController;
+use Laravel\Passport\Http\Controllers\ScopeController;
+use Laravel\Passport\Http\Controllers\ClientController;
+use Laravel\Passport\Http\Controllers\AccessTokenController;
+use Laravel\Passport\Http\Controllers\AuthorizationController;
+use Laravel\Passport\Http\Controllers\TransientTokenController;
+use Laravel\Passport\Http\Controllers\PersonalAccessTokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,4 +54,9 @@ Route::middleware('auth:api')->group(function () {
     });
 
     Route::apiResource('/answers', AnswerController::class);
+
+    Route::controller(UserController::class)->group(function () {
+        Route::post('/user/update-profile', 'updateProfile');
+        Route::get('/user/profile', 'showProfile');
+    });
 });
