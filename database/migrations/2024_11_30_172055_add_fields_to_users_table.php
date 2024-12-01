@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('level')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->enum('account_type', ['user', 'company'])->default('user');
+            $table->enum('account_type', ['user', 'company','mentor','freelancer'])->default('user');
         });
     }
 

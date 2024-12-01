@@ -80,7 +80,7 @@ class RoleAndPermissionSeeder extends Seeder
         $adminUser = User::firstOrCreate(
             ['email' => $adminEmail], // Check for existing user with this email
             [
-                'name' => 'Admin', // Default name for the admin user
+                'first_name' => 'Admin', // Default name for the admin user
                 'password' => Hash::make($adminPassword), // Ensure the password is hashed for security
             ]
         );
