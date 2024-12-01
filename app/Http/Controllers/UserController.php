@@ -12,7 +12,7 @@ class UserController extends Controller
         $request->validate([
             'first_name'      => 'nullable|string|max:255',   // First name (optional, string, max 255 characters)
             'last_name'       => 'nullable|string|max:255',   // Last name (optional, string, max 255 characters)
-            'email'           => 'required|email|unique:users,email,' . auth()->user()->id, // Email (required, unique except for the current user)
+            'email'           => '|email|unique:users,email,' . auth()->user()->id, // Email (required, unique except for the current user)
             'password'        => 'nullable|string|min:6|confirmed',  // Password (optional, must be confirmed if provided)
             'whatsapp_number' => 'nullable|string|unique:users,whatsapp_number,' . auth()->user()->id, // WhatsApp number (unique except for the current user)
             'linkedin'        => 'nullable|url',    // LinkedIn URL (optional, must be a valid URL)

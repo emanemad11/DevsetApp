@@ -22,8 +22,6 @@ class User extends Authenticatable
         'password',
         'first_name',
         'last_name',
-        'email',
-        'password',
         'account_type',
         'whatsapp_number',
         'linkedin',
