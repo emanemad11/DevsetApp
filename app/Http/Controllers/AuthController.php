@@ -45,24 +45,32 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        // Validate the incoming request data
         $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
+            'first_name'   => 'required|string|max:255', // First name is required and must be a string with a maximum length of 255 characters
+            'last_name'    => 'required|string|max:255', // Last name is required and must be a string with a maximum length of 255 characters
+            'email'        => 'required|email|unique:users,email', // Email is required, must be valid, and should be unique in the users table
+            'password'     => 'required|string|min:6|confirmed', // Password is required, must be at least 6 characters, and must be confirmed
+            'account_type' => 'required|string|in:company,user', // Account type is required and must be either 'admin' or 'user'
         ]);
 
+        // Create a new user with the validated data
         $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
+            'first_name'  => $request->first_name, // Set the user's first name
+            'last_name'   => $request->last_name,  // Set the user's last name
+            'email'       => $request->email,      // Set the user's email
+            'password'    => Hash::make($request->password), // Hash the password before storing it in the database
+            'account_type' => $request->account_type, // Set the account type (e.g., 'admin' or 'user')
         ]);
 
+        // Create an access token for the newly created user
         $token = $user->createToken('Access Token')->accessToken;
 
+        // Return a JSON response with the access token and user data
         return response()->json([
-            'token' => $token,
-            'user'  => $user,
-        ], 201);
+            'token' => $token,  // Include the access token in the response
+            'user'  => $user,   // Include the user data in the response
+        ], 201);  // Return HTTP status code 201 (Created)
     }
 
     public function forgotPassword(Request $request)
@@ -78,8 +86,8 @@ class AuthController extends Controller
             return response()->json(['message' => 'User not found.'], 404);
         }
 
-        // Generate a reset code (6-character random string)
-        $resetCode = Str::random(6);
+        // Generate a reset code (5-character random string)
+        $resetCode = Str::random(5);
 
         // Store the reset code in the database (ensure you have a reset_code column in the users table)
         $user->reset_code = $resetCode;

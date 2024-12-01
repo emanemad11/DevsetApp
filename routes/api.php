@@ -42,21 +42,8 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::middleware('auth:api')->group(function () {
-    Route::controller(QuestionController::class)->group(function () {
-        Route::post('/questions', 'store'); // أو أي ميثود أخرى تحتاجها
-    });
-
-    Route::apiResource('/questions', QuestionController::class);
-
-    Route::controller(AnswerController::class)->group(function () {
-        Route::get('/getQuizResults', 'getQuizResults');
-        Route::get('/getQuizAnswers', 'getQuizAnswers');
-    });
-
-    Route::apiResource('/answers', AnswerController::class);
-
     Route::controller(UserController::class)->group(function () {
-        Route::post('/user/update-profile', 'updateProfile');
-        Route::get('/user/profile', 'showProfile');
+        Route::post('/user/profile', 'saveProfile');
+        Route::get('/user/profile/show', 'showProfile');
     });
 });
